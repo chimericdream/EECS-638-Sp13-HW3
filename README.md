@@ -9,10 +9,9 @@ There is a makefile included with this submission that copies the necessary OPS/
 To compile the program, simply run `make`.
 
 ### Running the program
-To run part a of the assignment, run `./parta` after compiling.
+Each part of the assignment has its own executable that is created by the makefile.
 
-To run part b of the assignment, run `./partb` after compiling.
-
-To run part c of the assignment, run `./partc` after compiling.
-
-To run part d of the assignment, run `./partd` after compiling.
+Part a: `./parta`
+Part b: `./partb`
+Part c: `./partc`
+Part d: `./partd`
