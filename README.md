@@ -12,6 +12,9 @@ To compile the program, simply run `make`.
 Each part of the assignment has its own executable that is created by the makefile.
 
 Part a: `./parta`
+
 Part b: `./partb`
+
 Part c: `./partc`
+
 Part d: `./partd`
