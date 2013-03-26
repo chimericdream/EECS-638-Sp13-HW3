@@ -1,0 +1,78 @@
+module bengine(start) {
+    use decl;
+    use rules;
+    use wrul;
+    use wmt;
+
+    -- Will return the number of the dominant instantiation
+    -- Returns 0 if no instantiations should be fired
+    function selection():integer {
+        local
+        &S: integer,  -- the best instantiation so far
+        &SG: integer, -- the goal for &S
+        &SU: integer, -- the number of times &S has been fired so far
+        &SP: integer, -- the number of patterns on the left side of &S
+        &X: integer,  -- the next instantiation to try
+        &XG: integer, -- &X's goal
+        &XU: integer, -- &X's use count
+        &XP: integer, -- &X's pattern count
+        &DR: real,    -- dummy real variable
+        &DI: integer; -- dummy integer variable
+
+        -- Find an unexecuted instantiation
+        &S = 0;
+        &X = cssize();
+        while (&S = 0) {
+            if (instance(&X, &XG, &XU, &DR, &DI, &XP) = 0B) {
+                return (&S);
+            };
+            if (&XU = 0) {
+                &S  = &X;
+                &SG = &XG;
+                &SP = &XP;
+            };
+            &X = &X - 1;
+        };
+
+        -- Examine the rest of the instantiations looking for the dominant one
+        while (1B) {
+            if (instance(&X, &XG, &XU, &DR, &DI, &XP) = 0B) {
+                return (&S);
+            };
+            if ((&XU = 0) /\ ((&XG > &SG) \/ (&XG = &SG) /\ (&XP > &SP))) {
+                &S = &X;
+                &SG = &XG;
+                &SP = &XP;
+            };
+            &X = &X - 1;
+        };
+    };
+
+    function run(&CYCLES: integer): symbol {
+        local
+        &CNT:  integer, -- cycle count
+        &INST: integer; -- next instantiation to fire
+
+        for &CNT = (1 to &CYCLES) {
+            -- Conflict resolution
+            &INST = selection();
+            if (&INST = 0) return (|no satisfied rules|);
+            --act
+            fire &INST;
+        };
+        return (|cycle limit reached|);
+    };
+
+    procedure start() {
+        local
+        &I: integer;
+
+        make (goal val=G);
+        make (object val=A);
+        make (object val=B);
+
+        &I = 10;
+        call run(&I);
+        write() run(&I), '\n';
+    };
+}

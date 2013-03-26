@@ -1,0 +1,104 @@
+module rules() {
+    use decl;
+
+	rule Ru1 {
+		(fobject val=A); ~(fobject val=B)
+		-->
+		make (fobject val=D);
+		write() 'D', '\n';
+	};
+	
+	rule Ru2 {
+		(fobject val=C); ~(fobject val=B)
+		-->
+		make (fobject val=E);
+		write() 'E', '\n';
+	};
+	
+	rule Ru3 {
+		(fobject val=C); ~(fobject val=A)
+		-->
+		make (fobject val=F);
+		write() 'F', '\n';
+	};
+	
+	rule Ru4 {
+		(fobject val=D); (fobject val=E)
+		-->
+		make (fobject val=G);
+		write() 'G', '\n';
+	};
+
+	rule Ru5 {
+		(fobject val=E); (fobject val=F)
+		-->
+		make (fobject val=H);
+		write() 'H', '\n';
+	};
+	
+    rule bRu1 {
+       (goal val=H)
+       -->
+       make (goal val=E);
+       write() |gE|, '\n';
+
+       make (goal val=F);
+       write() |gF|, '\n';
+    };
+
+    rule bRu2 {
+       (goal val=G)
+       -->
+       make (goal val=D);
+       write() |gD|, '\n';
+
+       make (goal val=E);
+       write() |gE|, '\n';
+    };
+
+    rule bRu3 {
+       &1 (goal val=F); (object val=C); ~(object val=A)
+       -->
+       remove &1;
+       make (object val=F);
+       write() 'F', '\n';
+    };
+
+    rule bRu4 {
+       &1 (goal val=E); (object val=C); ~(object val=B)
+       -->
+       remove &1;
+       make (object val=E);
+       write() 'E', '\n';
+    };
+
+    rule bRu5 {
+       &1 (goal val=D); (object val=A); ~(object val=B)
+       -->
+       remove &1;
+       make (object val=D);
+       write() 'D', '\n';
+    };
+
+    rule bRu6 {
+       &1 (goal val=G); (object val=D); (object val=E)
+       -->
+       remove &1;
+       make (object val=G);
+       write() 'G', '\n';
+    };
+
+    rule bRu7 {
+       &1 (goal val=H); (object val=E); (object val=F)
+       -->
+       remove &1;
+       make (object val=H);
+       write() 'H', '\n';
+    };
+
+    rule concl {
+       (object); ~(goal)
+       -->
+       write() |Goal is supported|, '\n';
+    };
+};

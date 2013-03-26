@@ -1,0 +1,5 @@
+module decl() {
+    type goal    = element(val:symbol);
+    type object  = element(val:symbol);
+    type fobject = element(val:symbol);
+};

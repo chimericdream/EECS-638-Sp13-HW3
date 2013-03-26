@@ -1,0 +1,18 @@
+module eng1(start) {
+    use decl;
+    use rules;
+	use wrul;
+	use wmt;
+
+    procedure start() {
+        local &I: integer;
+        make (fobject val=C);
+
+        &I = 1;
+        while (&I <= cssize()) {
+            fire &I;
+            write() cssize(), '\n';
+            &I = &I + 1;
+        };
+    };
+}

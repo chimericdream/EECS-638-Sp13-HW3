@@ -1,0 +1,15 @@
+module wrul() {
+    procedure war() { -- write names of all instantiated rules
+       local &I, &J, &LEN : integer;
+       local &NAME : name;
+
+       for &I = (1 to cssize()) {
+           &LEN = irule(&NAME, &I);
+           write() &I, |:|;
+           for &J = (1 to &LEN) {
+               write() &NAME[&J];
+           };
+           write() '\n';
+       };
+    };
+};
